@@ -8,7 +8,11 @@
   <title>Brainwaves</title>
   <script>
     let values = [];
-    let port;
+    let port = null;
+    const colorPalettes = [["#fe9685", "#9ed0c4"], ["#f3293b", "#8d987f"], ["#414c8ca", "#e17900"], ["#003d38", "#a4577b"], ["#3e0c15", "#2e3027"], ["#a4577b", "#174552"]]
+    const colorPalette = colorPalettes[Math.floor(Math.random() * colorPalettes.length)];
+    console.log(colorPalette);
+
   </script>
   <script src="main.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.min.js"></script>
@@ -18,20 +22,41 @@
     }
   </script>
   <style>
-    button {
+    /* button#muse {
       position: absolute;
       left: 0;
       top: 0;
     }
 
+    button#serial {
+      position: absolute;
+      left: 10;
+      top: 0;
+    } */
+
     main {
       position: absolute;
+    }
+
+    div#menu {
+      transition: all .4s ease;
+      opacity: 0;
+    }
+
+    div#menu:hover {
+      opacity: 1;
     }
   </style>
 </head>
 
 <body>
   <div></div>
+  <div id="menu" style="display: flex; position: absolute; top:0;left:0;">
+    <button id="serial">Serial</button>
+    <button id="muse">Muse</button>
+    <button id="start">Start</button>
+    <button id="start">Reset</button>
+  </div>
   <div style="position: absolute; z-index: -1;" id="canvas"></div>
 </body>
 

@@ -738,8 +738,8 @@ export function setupMuse() {
   bluetoothConnection = new p5BLE();
 
   //create the connect button
-  connectButton = createButton("Connect");
-  connectButton.mousePressed(connectButtonClicked);
+  connectButton = document.querySelector("Button#muse");
+  connectButton.onclick = connectButtonClicked;
 }
 
 //user clicks connect button
@@ -753,7 +753,7 @@ export function museConnected(error, characteristics) {
     console.log(error); //error connecting
   } else {
     //hide the connect button
-    connectButton.hide();
+    // connectButton.hide();
 
     //prepare muse to stream data
     let museIsReady = initMuseStreaming(characteristics);

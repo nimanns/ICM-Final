@@ -3,7 +3,7 @@ import p5 from "p5";
 import { sketch } from "./sketch";
 
 const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-const sketchParent: HTMLElement = document.querySelector("div#canvas");
+const sketchParent = document.querySelector("div#canvas");
 document.body.style.margin = "0";
 document.body.style.background = "#000";
 document.body.style.height = "100vh";
@@ -26,8 +26,8 @@ let heights = [];
 let heights2 = [];
 let heights3 = [];
 for (let i = 0; i < 900; i += 5) {
-  heights[i] = Math.random() * 30;
-  heights2[i] = Math.random() * 30;
+  heights[i] = Math.random() * 26;
+  heights2[i] = Math.random() * 20;
   heights3[i] = Math.random() * 35;
 }
 
@@ -73,28 +73,24 @@ setInterval(() => {
 `;
   for (let i = 0; i < 900; i += 10) {
     content += `<rect style="transform-box: fill-box; transform-origin:top;filter: drop-shadow(0px 0px 4px rgb(0 0 0 / 0.4));
-  " y="50%" x="50%" width="2" height="35%" fill="url(#grad4)" transform="translate(-2) rotate(${
+  " y="50%" x="50%" width="2" height="30%" fill="url(#grad4)" transform="translate(-2) rotate(${
     i + 15
   })"/>
     `;
   }
   for (let i = 0; i < 900; i += 5) {
     content += `<rect style="transform-box: fill-box; transform-origin:top;filter: drop-shadow(0px 0px 4px rgb(0 0 0 / 0.4));
-  " y="50%" x="50%" width="1" height="${(heights[i] = lerp(
-    heights[i],
-    Math.random() * 50,
-    0.004
-  ))}%" fill="url(#grad3)" transform="translate(0) rotate(${i + 10})"/>
+  " y="50%" x="50%" width="1" height="${
+    heights[i]
+  }%" fill="url(#grad3)" transform="translate(0) rotate(${i + 10})"/>
     `;
   }
 
   for (let i = 0; i < 900; i += 5) {
     content += `<rect style="transform-box: fill-box; transform-origin:top;filter: drop-shadow(0px 0px 4px rgb(0 0 0 / 0.4));
-  " y="50%" x="50%" width="2" height="${(heights2[i] = lerp(
-    heights2[i],
-    Math.random() * 30,
-    0.004
-  ))}%" fill="url(#grad1)" transform="translate(-1) rotate(${i + 15})"/>
+  " y="50%" x="50%" width="2" height="${
+    heights2[i]
+  }%" fill="url(#grad1)" transform="translate(-1) rotate(${i + 15})"/>
     `;
   }
 
@@ -116,7 +112,7 @@ setInterval(() => {
   // }
 
   svg.innerHTML = content;
-}, 100);
+}, 1000);
 
 new p5(sketch, sketchParent);
 

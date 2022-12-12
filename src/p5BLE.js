@@ -1,4 +1,3 @@
-// @ts-nocheck
 // Copyright (c) 2018 p5ble
 //
 // This software is released under the MIT License.
