@@ -36,13 +36,13 @@ let color2 = [90, 20, 90];
 let color3 = [200, 20, 90];
 let color4 = [140, 140, 90];
 let junk = `<circle r="35%" cx="50%" cy="50%" stroke="black" stroke-width="3" fill="black" filter="url(#f1)"/>`;
+
 setInterval(() => {
   let content = `
-
 <defs>
     <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="50%" style="stop-color:#000");stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#6099A6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:${colorPalette[0]};stop-opacity:1" />
     </linearGradient>
     <linearGradient id="grad2" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="60%" style="stop-color:#000");stop-opacity:1" />
@@ -50,11 +50,11 @@ setInterval(() => {
     </linearGradient>
  <linearGradient id="grad3" x1="0%" y1="0%" x2="0%" y2="100%">
 <stop offset="50%" style="stop-color:rgb(0,0,0);stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#D98236;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:${colorPalette[1]};stop-opacity:1" />
     </linearGradient>
  <linearGradient id="grad4" x1="0%" y1="0%" x2="0%" y2="100%">
 <stop offset="60%" style="stop-color:rgb(0,0,0);stop-opacity:1" />
-      <stop offset="90%" style="stop-color:#444;stop-opacity:1" />
+      <stop offset="90%" style="stop-color:#333;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#000;stop-opacity:1" />
     </linearGradient>
 <linearGradient id="grad5" x1="0%" y1="0%" x2="0%" y2="100%">

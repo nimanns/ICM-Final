@@ -9,9 +9,15 @@
   <script>
     let values = [];
     let port = null;
-    const colorPalettes = [["#fe9685", "#9ed0c4"], ["#f3293b", "#8d987f"], ["#414c8ca", "#e17900"], ["#003d38", "#a4577b"], ["#3e0c15", "#2e3027"], ["#a4577b", "#174552"]]
+    const colorPalettes = [["#fe9685", "#9ed0c4"], ["#f3293b", "#8d987f"], ["#414c8c", "#e17900"], ["#003d38", "#a4577b"], /*["#3e0c15", "#2e3027"],*/["#a4577b", "#174552"], ["#6099A6", "#D98236"]]
     const colorPalette = colorPalettes[Math.floor(Math.random() * colorPalettes.length)];
     console.log(colorPalette);
+    let alpha = 0;
+    let others = 0;
+    let radii = [];
+    let radii2 = [];
+    var yodaTouched = true;
+
 
   </script>
   <script src="main.js" defer></script>
@@ -50,12 +56,20 @@
 </head>
 
 <body>
+  <audio id="chakras">
+    <source src="./1.mp3">
+  </audio>
+  <audio id="loop" loop>
+    <source src="./song.mp3">
+  </audio>
+  <!-- <iframe style="position:absolute; top:0; left:0; width:100%;height:100%;"
+    src="https://editor.p5js.org/nimanns/full/rYMEIVFVp"></iframe> -->
   <div></div>
   <div id="menu" style="display: flex; position: absolute; top:0;left:0;">
     <button id="serial">Serial</button>
     <button id="muse">Muse</button>
     <button id="start">Start</button>
-    <button id="start">Reset</button>
+    <button id="reset">Reset</button>
   </div>
   <div style="position: absolute; z-index: -1;" id="canvas"></div>
 </body>

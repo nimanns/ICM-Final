@@ -4,12 +4,20 @@ import * as muse from "./muse/all";
 let x;
 let y;
 let i;
-let radii = [];
-let radii2 = [];
 i = 0;
 
 const coeffForStartingPoint = 201;
 let yodaSensorValue = 0;
+const chakras = document.querySelector("audio#chakras");
+const loop = document.querySelector("audio#loop");
+document.querySelector("button");
+loop.play();
+
+document.querySelector("button#reset").addEventListener("click", () => {
+  radii = [];
+  radii2 = [];
+  chakras.currentTime = 0;
+});
 
 export const sketch = (p5) => {
   p5.setup = () => {
@@ -43,36 +51,20 @@ export const sketch = (p5) => {
 
     let grad = p5.drawingContext.createRadialGradient(0, 0, 100, 0, 0, 500);
 
-    grad.addColorStop(0, "white");
-    grad.addColorStop(0.4, "#6099A6");
-    grad.addColorStop(0.5, "#D98236");
-    grad.addColorStop(0.55, "#D98236");
-    grad.addColorStop(0.6, "#D98236");
-    grad.addColorStop(1, "violet");
+    grad.addColorStop(0, colorPalette[0]);
+    grad.addColorStop(0.4, colorPalette[0]);
+    grad.addColorStop(0.5, colorPalette[0]);
+    grad.addColorStop(0.55, colorPalette[0]);
+    grad.addColorStop(0.6, colorPalette[0]);
+    grad.addColorStop(1, colorPalette[0]);
 
     p5.drawingContext.strokeStyle = grad;
     let grad2 = p5.drawingContext.createRadialGradient(0, 0, 50, 0, 0, 700);
-    grad2.addColorStop(0, "white");
-    grad2.addColorStop(0.5, "#ffaacc");
-    grad2.addColorStop(0.55, "cyan");
-    grad2.addColorStop(1, "white");
+    grad2.addColorStop(0, colorPalette[1]);
+    grad2.addColorStop(0.5, colorPalette[1]);
+    grad2.addColorStop(0.55, colorPalette[1]);
+    grad2.addColorStop(1, colorPalette[1]);
     p5.translate(p5.width / 2, p5.height / 2);
-    let alpha = 0;
-    let sumOfOthers = 0;
-    if (values.delta) {
-      alpha = Math.floor(values.alpha);
-      sumOfOthers =
-        (Math.floor(values.delta) +
-          Math.floor(values.theta) +
-          Math.floor(values.beta) +
-          Math.floor(values.gamma)) /
-        4;
-
-      // if (p5.frameCount % 10 === 0) {
-      // console.log(alpha);
-      // console.log(sumOfOthers);
-      // }
-    }
 
     // console.log(p5.int(1224 / 2.9));
     // if (p5.frameCount % p5.int(750 / 10) === 0) {
@@ -87,24 +79,41 @@ export const sketch = (p5) => {
     // radii.push(x / 1.7 + 50 - 20);
     // radii2.push(x / 1.6 + 40 + 20);
 
-    if (true) {
-      if (counter === 29 || counter === 13 || counter === 19) {
-        // radii.push(x / 1.7 + random(0, 50) - 20);
-        // radii2.push(x / 1.6 + random(0, 40) + 20);
+    if (yodaSensorValue > 400) {
+      loop.pause();
+      chakras.play();
+      if (values.delta) {
+        alpha = Math.floor(values.alpha);
+        others =
+          (Math.floor(values.delta) +
+            Math.floor(values.theta) +
+            Math.floor(values.beta) +
+            Math.floor(values.gamma)) /
+          4;
 
-        p5.drawingContext.shadowColor = p5.color(255, 255, 255, 100);
+        // if (p5.frameCount % 10 === 0) {
+        // console.log(alpha);
+        // console.log(others);
+        // }
+      } else {
+        // alpha = p5.random(0, 70);
+        // others = p5.random(0, 50);
+      }
+
+      if (counter === 29 || counter === 13 || counter === 19) {
+        p5.drawingContext.shadowColor = p5.color(255, 255, 255, 70);
         p5.background(0);
         p5.fill("black");
         p5.noStroke();
         p5.circle(0, 0, 1000);
 
-        radii.push(x / 2 + p5.constrain(alpha, 0, 70) - 20);
+        radii.push(x / 2 + p5.constrain(alpha, 0, 70));
 
-        sumOfOthers = p5.constrain(sumOfOthers, 0, 50) + 20;
-        radii2.push(x / 1.6 + sumOfOthers);
+        others = p5.constrain(others, 0, 50) + 20;
+        radii2.push(x / 1.6 + others);
 
         let valueToBeSent =
-          Math.floor(sumOfOthers).toString() +
+          Math.floor(others).toString() +
           "," +
           Math.floor(alpha).toString() +
           "\n";
@@ -112,9 +121,10 @@ export const sketch = (p5) => {
           port.write(valueToBeSent);
         }
 
-        p5.drawingContext.shadowBlur = 12;
-        p5.drawingContext.shadowColor = p5.color(200, 200, 200, 150);
-        p5.strokeWeight(1.2);
+        p5.drawingContext.shadowBlur = 18;
+        p5.drawingContext.shadowColor = p5.color(200, 100);
+
+        p5.strokeWeight(1.6);
         p5.noFill();
         p5.stroke(255);
 
@@ -173,7 +183,7 @@ export const sketch = (p5) => {
         p5.endShape();
 
         p5.drawingContext.strokeStyle = grad2;
-        p5.drawingContext.shadowColor = p5.color(255, 255);
+        // p5.drawingContext.shadowColor = p5.color(255, 90);
 
         p5.noFill();
         p5.stroke(255);
@@ -233,13 +243,13 @@ export const sketch = (p5) => {
         // y += 0.5;
       }
       if (counter === 20) {
-        if (port) {
-          // port.write(p5.int(p5.random(20, 255)) + "," + p5.int(100));
-          port.write(
-            p5.int(p5.floor(p5.random(0, 70))) + "," + p5.int(sumOfOthers)
-          );
-        }
+        // if (port) {
+        //   port.write(p5.int(p5.floor(p5.random(0, 70))) + "," + p5.int(others));
+        // }
       }
+    } else if (yodaSensorValue < 400 && yodaSensorValue > 100) {
+      chakras.pause();
+      loop.play();
     }
 
     // p5.drawingContext.shadowBlur = 12;
