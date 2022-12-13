@@ -16,7 +16,7 @@
     let others = 0;
     let radii = [];
     let radii2 = [];
-    var yodaTouched = true;
+    let yodaTouched = false;
 
 
   </script>
@@ -39,6 +39,10 @@
       left: 10;
       top: 0;
     } */
+    body {
+      margin: 0;
+      /* overflow: hidden; */
+    }
 
     main {
       position: absolute;
@@ -47,10 +51,15 @@
     div#menu {
       transition: all .4s ease;
       opacity: 0;
+      z-index: 2;
     }
 
     div#menu:hover {
       opacity: 1;
+    }
+
+    .invisible {
+      opacity: 0 !important;
     }
   </style>
 </head>
@@ -62,8 +71,6 @@
   <audio id="loop" loop>
     <source src="./song.mp3">
   </audio>
-  <!-- <iframe style="position:absolute; top:0; left:0; width:100%;height:100%;"
-    src="https://editor.p5js.org/nimanns/full/rYMEIVFVp"></iframe> -->
   <div></div>
   <div id="menu" style="display: flex; position: absolute; top:0;left:0;">
     <button id="serial">Serial</button>
@@ -72,6 +79,9 @@
     <button id="reset">Reset</button>
   </div>
   <div style="position: absolute; z-index: -1;" id="canvas"></div>
+  <div
+    style="position: absolute; z-index: 1; width:100%; height:100%;user-select: none; pointer-events: none; opacity: 1; transition: all 2s ease;"
+    id="canvas2"></div>
 </body>
 
 </html>

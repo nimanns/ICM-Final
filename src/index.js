@@ -1,9 +1,10 @@
 import lerp from "lerp";
 import p5 from "p5";
-import { sketch } from "./sketch";
+import { sketch, sketch2 } from "./sketch";
 
 const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 const sketchParent = document.querySelector("div#canvas");
+const sketch2Parent = document.querySelector("div#canvas2");
 document.body.style.margin = "0";
 document.body.style.background = "#000";
 document.body.style.height = "100vh";
@@ -115,5 +116,4 @@ setInterval(() => {
 }, 1000);
 
 new p5(sketch, sketchParent);
-
-// document.body.append(btn);
+new p5(sketch2, sketch2Parent);

@@ -1,3 +1,5 @@
+//Thanks to Jason Snell for providing us with this piece of code
+
 /*
  *  DSP.js - a comprehensive digital signal processing  library for javascript
  *
@@ -761,11 +763,12 @@ export function museConnected(error, characteristics) {
     //if muse is ready for streaming
     if (museIsReady) {
       //then add a stream button to the page
-      const startButton = createButton("Start");
-      startButton.mousePressed(startButtonClicked);
+      // const startButton = createButton("Start");
+      const startButton = document.querySelector("button#start");
+      startButton.addEventListener("click", startButtonClicked);
 
       function startButtonClicked() {
-        startButton.hide();
+        // startButton.hide();
         startMuse();
       }
     }

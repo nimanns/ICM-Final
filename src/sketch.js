@@ -5,6 +5,7 @@ let x;
 let y;
 let i;
 i = 0;
+let resetCanvas = false;
 
 const coeffForStartingPoint = 201;
 let yodaSensorValue = 0;
@@ -17,14 +18,11 @@ document.querySelector("button#reset").addEventListener("click", () => {
   radii = [];
   radii2 = [];
   chakras.currentTime = 0;
+  resetCanvas = true;
 });
 
 export const sketch = (p5) => {
   p5.setup = () => {
-    //circumference / seconds = number we have to devide the circumfrance to get the appropriate framerate
-    //our circle's radius is on average 390
-    //390/420=0.9
-    //This speed is for 60fps for other framerates do speed * 60/targetFramerate
     let serialBtn = document.querySelector("Button#serial");
     p5.frameRate(10);
     serialBtn.onclick = () => {
@@ -74,12 +72,13 @@ export const sketch = (p5) => {
         port.write("val");
       }
       if (port) yodaSensorValue = parseInt(port.readUntil("\n"));
-      console.log(yodaSensorValue);
+      // console.log(yodaSensorValue);
     }
     // radii.push(x / 1.7 + 50 - 20);
     // radii2.push(x / 1.6 + 40 + 20);
 
-    if (yodaSensorValue > 400) {
+    if (yodaSensorValue > 400 && radii.length < 371) {
+      yodaTouched = true;
       loop.pause();
       chakras.play();
       if (values.delta) {
@@ -250,6 +249,12 @@ export const sketch = (p5) => {
     } else if (yodaSensorValue < 400 && yodaSensorValue > 100) {
       chakras.pause();
       loop.play();
+      yodaTouched = false;
+    }
+    if (yodaTouched) {
+      document.querySelector("div#canvas2").classList.add("invisible");
+    } else {
+      document.querySelector("div#canvas2").classList.remove("invisible");
     }
 
     // p5.drawingContext.shadowBlur = 12;
@@ -268,9 +273,132 @@ export const sketch = (p5) => {
     // }
 
     counter === 30 ? (counter = 0) : counter++;
+  };
+  if (resetCanvas) {
+    background(0);
+  }
+};
 
-    if (radii.length === 370) {
-      p5.noLoop();
+export const sketch2 = (p5) => {
+  let imgs = [];
+  let img;
+  let img2;
+  let img3;
+  let circle = 0;
+  let circle2 = 0;
+  let circle3 = 0;
+  p5.preload = () => {
+    img = p5.loadImage("closed1.png");
+    img2 = p5.loadImage("s.png");
+    img3 = p5.loadImage("eyeclosed.png");
+  };
+  p5.setup = () => {
+    p5.createCanvas(p5.windowWidth, p5.windowHeight);
+  };
+  p5.draw = () => {
+    p5.push();
+    p5.angleMode(DEGREES);
+    p5.imageMode(CENTER);
+    p5.fill(0);
+    p5.ellipse(476, 277, 390, 390);
+    p5.translate(p5.width / 2, p5.height / 2);
+    circle = circle + 0.2;
+    p5.rotate(circle);
+    p5.image(
+      img2,
+      0,
+      3,
+      p5.width,
+      p5.height,
+      0,
+      0,
+      img.width,
+      img.height,
+      p5.CONTAIN,
+      p5.CENTER
+    );
+    circle2 = circle - 0.2;
+    p5.push();
+    p5.rotate(circle2);
+    p5.scale(2);
+    p5.image(
+      img2,
+      0,
+      3,
+      p5.width,
+      p5.height,
+      0,
+      0,
+      img.width * 2,
+      img.height,
+      p5.CONTAIN,
+      p5.CENTER
+    );
+    p5.pop();
+    p5.push();
+    circle3 = circle - 0.3;
+    p5.rotate(circle3);
+    p5.scale(4);
+    p5.image(
+      img2,
+      0,
+      3,
+      p5.width,
+      p5.height,
+      0,
+      0,
+      img.width * 2,
+      img.height,
+      p5.CONTAIN,
+      p5.CENTER
+    );
+    p5.pop();
+    p5.pop();
+
+    if (yodaTouched) {
+      p5.image(
+        img3,
+        0,
+        0,
+        p5.width,
+        p5.height,
+        0,
+        0,
+        img.width,
+        img.height,
+        p5.CONTAIN,
+        p5.CENTER
+      );
+    } else {
+      p5.image(
+        img,
+        0,
+        0,
+        p5.width,
+        p5.height,
+        0,
+        0,
+        img.width,
+        img.height,
+        p5.CONTAIN,
+        p5.CENTER
+      );
     }
+  };
+
+  // function pupil() {
+  //   push();
+  //   scale(mouseY / 1000);
+  //   let d1 = dist(mouseX, mouseY, 473, 275);
+  //   if (d1 < 50) {
+  //     noFill();
+  //     strokeWeight(10);
+  //     stroke(200, 230, 0);
+  //     ellipse(473, 283, 10);
+  //     pop();
+  //   }
+  // }
+  p5.windowResized = () => {
+    p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
   };
 };
